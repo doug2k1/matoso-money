@@ -1,7 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const Broker = sequelize.define('Deposit', {
     amount: DataTypes.DECIMAL(10,5),
-    date: DataTypes.DATEONLY
+    date: {
+      type: DataTypes.DATEONLY,
+      defaultValue: DataTypes.NOW
+    }
   });
 
   Broker.associate = function(models) {

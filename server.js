@@ -41,8 +41,8 @@ app.use(
   })
 );
 
-/* sequelize.sync().then(() => {
+sequelize.sync().then(() => {
   console.log('synced');
-}); */
+});
 
 app.listen(process.env.PORT || 3000);
