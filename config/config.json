@@ -1,0 +1,11 @@
+{
+  "development": {
+    "database": "forest",
+    "dialect": "sqlite",
+    "storage": "db.sqlite"
+  },
+  "production": {
+    "use_env_variable": "DB_URL",
+    "dialect": "mysql"
+  }
+}

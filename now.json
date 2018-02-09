@@ -1,0 +1,10 @@
+{
+  "alias": "matoso-money",
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": 80,
+    "DB_URL": "@money-db-url",
+    "FOREST_ENV_SECRET": "@money-forest-env-secret",
+    "FOREST_AUTH_SECRET": "@money-forest-auth-secret"
+  }
+}
