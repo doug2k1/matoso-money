@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     amount: DataTypes.DECIMAL(10, 5),
     date: {
       type: DataTypes.DATEONLY,
-      defaultValue: sequelize.fn('current_date')
+      defaultValue: sequelize.literal('CURRENT_DATE')
     }
   });
 
