@@ -1,11 +1,11 @@
 {
   "name": "matoso-money",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node server",
-    "dev": "heroku local"
+    "dev": "heroku local",
+    "prettier": "prettier --write \"./**/*.js\""
   },
   "engines": {
     "node": "9.x.x"
