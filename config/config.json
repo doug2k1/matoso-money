@@ -1,11 +1,10 @@
 {
   "development": {
-    "database": "forest",
-    "dialect": "sqlite",
-    "storage": "db.sqlite"
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgres"
   },
   "production": {
-    "use_env_variable": "DB_URL",
-    "dialect": "mysql"
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgres"
   }
 }
