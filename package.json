@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon server"
+    "dev": "heroku local"
   },
   "engines": {
     "node": "9.x.x"

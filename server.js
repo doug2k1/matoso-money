@@ -4,7 +4,10 @@ const cookieParser = require('cookie-parser');
 const cors = require('express-cors');
 const ForestAdmin = require('forest-express-sequelize');
 const jwt = require('express-jwt');
+const postgraphql = require('postgraphql').postgraphql;
+const pg = require('pg');
 
+pg.defaults.ssl = true;
 const app = express();
 
 app.use(bodyParser.json());
@@ -23,14 +26,6 @@ app.use(
     credentialsRequired: false
   })
 );
-
-const groupBy = (collection, key) => {
-  return collection.reduce((acc, val) => {
-    (acc[val[key]] = acc[val[key]] || []).push(val);
-    return acc;
-  }, {});
-};
-
 app.use(
   ForestAdmin.init({
     modelsDir: __dirname + '/models',
@@ -38,6 +33,9 @@ app.use(
     authSecret: process.env.FOREST_AUTH_SECRET,
     sequelize: require('./models').sequelize
   })
+);
+app.use(
+  postgraphql(`${process.env.DATABASE_URL}?ssl=1`, 'public', { graphiql: true })
 );
 
 app.listen(process.env.PORT || 3000);
