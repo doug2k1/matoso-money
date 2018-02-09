@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('express-cors');
 const ForestAdmin = require('forest-express-sequelize');
-const { BalanceUpdate, Investment, Broker, sequelize } = require('./models');
 const jwt = require('express-jwt');
 
 const app = express();
@@ -40,9 +39,5 @@ app.use(
     sequelize: require('./models').sequelize
   })
 );
-
-/* sequelize.sync().then(() => {
-  console.log('synced');
-}); */
 
 app.listen(process.env.PORT || 3000);
