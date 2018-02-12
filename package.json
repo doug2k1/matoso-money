@@ -1,10 +1,12 @@
 {
-  "name": "matoso-money",
+  "name": "my-money",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "node server",
-    "dev": "heroku local",
+    "dev:back": "heroku local",
+    "dev:front": "npm run start --prefix client",
+    "dev": "concurrently \"npm run dev:back\" \"npm run dev:front\"",
     "prettier": "prettier --write \"./**/*.js\""
   },
   "engines": {
@@ -23,9 +25,10 @@
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
     "postgraphql": "^3.5.6",
-    "sequelize": "^4.33.2"
+    "sequelize": "^4.33.3"
   },
   "devDependencies": {
+    "concurrently": "^3.5.1",
     "nodemon": "^1.14.12",
     "prettier": "^1.10.2",
     "sequelize-cli": "^3.2.0"

@@ -7,6 +7,7 @@ const jwt = require('express-jwt');
 const postgraphql = require('postgraphql').postgraphql;
 const pg = require('pg');
 
+// must use SSL to connect to Heroku
 pg.defaults.ssl = true;
 const app = express();
 
