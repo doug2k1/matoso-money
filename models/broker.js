@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Broker = sequelize.define('Broker', {
-    name: DataTypes.STRING
+    name: { type: DataTypes.STRING, allowNull: false }
   });
 
   Broker.associate = function(models) {

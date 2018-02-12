@@ -1,9 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const BalanceUpdate = sequelize.define('BalanceUpdate', {
-    amount: DataTypes.DECIMAL(10, 5),
+    amount: { type: DataTypes.DECIMAL(10, 5), allowNull: false },
     date: {
       type: DataTypes.DATEONLY,
-      defaultValue: '2018-09-03'
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     }
   });
 

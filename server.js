@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(express.static('public'));
 app.use(
   cors({
-    allowedOrigins: ['*.forestadmin.com', 'localhost:3000'],
+    allowedOrigins: ['*.forestadmin.com', 'localhost:5000'],
     headers: ['Authorization', 'X-Requested-With', 'Content-Type']
   })
 );
@@ -38,4 +38,4 @@ app.use(
   postgraphql(`${process.env.DATABASE_URL}?ssl=1`, 'public', { graphiql: true })
 );
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 5000);
