@@ -1,0 +1,53 @@
+/* colors */
+
+$color-primary: #3c8dbc;
+$color-primary-dark: darken($color-primary, 5%);
+$color-primary-light: lighten($color-primary, 5%);
+
+$color-black: #111;
+$color-black-dark: darken($color-black, 5%);
+$color-black-light: lighten($color-black, 5%);
+
+$color-white: #fff;
+
+$color-gray: #d2d6de;
+$color-gray-dark: darken($color-gray, 5%);
+$color-gray-light: lighten($color-gray, 5%);
+$color-gray-lighter: #f4f4f4;
+
+$color-aqua: #00c0ef;
+$color-green: #00a65a;
+
+$color-success: #00a65a;
+$color-success-dark: darken($color-success, 5%);
+$color-success-light: lighten($color-success, 5%);
+
+$color-danger: #f56954;
+$color-danger-dark: darken($color-danger, 5%);
+$color-danger-light: lighten($color-danger, 5%);
+
+$sidebar-bg: #222d32;
+$content-bg: #ecf0f5;
+
+/* fonts */
+
+$base-font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial,
+  sans-serif;
+$base-font-weight: 400;
+$base-font-size: 14px;
+$base-line-height: 20px;
+$base-text-color: #333;
+$font-weight-bold: 700;
+$font-weight-light: 300;
+
+/* dimensions */
+
+$spacing: 15px;
+$header-height: 50px;
+$sidebar-width: 230px;
+$border-radius: 3px;
+$box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+/* breakpoints */
+
+$width-mobile: 700px;
