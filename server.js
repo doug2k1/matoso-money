@@ -36,7 +36,9 @@ app.use(
   })
 );
 app.use(
-  postgraphql(`${process.env.DATABASE_URL}?ssl=1`, 'public', { graphiql: true })
+  postgraphql(`${process.env.DATABASE_URL}?ssl=1`, 'public', {
+    graphiql: true
+  })
 );
 
 app.listen(process.env.PORT || 5000);
