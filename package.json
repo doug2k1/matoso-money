@@ -7,7 +7,8 @@
     "dev:back": "heroku local",
     "dev:front": "npm run start --prefix client",
     "dev": "concurrently \"npm run dev:back\" \"npm run dev:front\"",
-    "prettier": "prettier --write \"./{src,client/src}/**/*.{js,scss}\""
+    "prettier": "prettier --write \"./{src,client/src}/**/*.{js,scss}\"",
+    "postinstall": "npm run build --prefix client"
   },
   "engines": {
     "node": "9.x.x"
