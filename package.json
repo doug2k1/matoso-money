@@ -8,7 +8,7 @@
     "dev:front": "npm run start --prefix client",
     "dev": "concurrently \"npm run dev:back\" \"npm run dev:front\"",
     "prettier": "prettier --write \"./{src,client/src}/**/*.{js,scss}\"",
-    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "npm install --dev --prefix client && npm run build --prefix client"
   },
   "engines": {
     "node": "9.x.x"
