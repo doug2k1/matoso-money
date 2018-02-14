@@ -8,9 +8,9 @@ export default class InvestmentsPage extends React.Component<{}, {}> {
   render() {
     return (
       <Fragment>
-        {/*<div className="buttons-row">
+        {/* <div className="buttons-row">
           <Button icon="plus" size="small" label="Novo" />
-        </div>*/}
+        </div> */}
         <Box
           title="Editar investimento"
           footer={

@@ -20,11 +20,6 @@ module.exports = {
       '/graphql': 'http://localhost:5000'
     }
   },
-  resolve: {
-    alias: {
-      Styles: path.resolve('src/styles')
-    }
-  },
 
   module: {
     rules: [

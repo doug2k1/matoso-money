@@ -23,7 +23,7 @@ export default class Button extends React.Component<Props, {}> {
     const { label, icon, type, size, disabled } = this.props;
     const className = classNames('btn', {
       'btn-icon': icon,
-      disabled: disabled,
+      disabled,
       [`btn-${type}`]: type,
       [`btn-${size}`]: size
     });

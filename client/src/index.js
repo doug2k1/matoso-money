@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import App from './components/App';
-
 import { ApolloProvider, graphql } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-client-preset';
 import gql from 'graphql-tag';
+import App from './components/App';
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 
@@ -16,7 +13,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-class Broker extends React.Component {
+class Broker extends React.Component<any, any> {
   render() {
     const { brokerQuery } = this.props;
 
@@ -55,7 +52,10 @@ const BrokerQL = graphql(
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Router>
-      <BrokerQL />
+      <React.Fragment>
+        <BrokerQL />
+        <App />
+      </React.Fragment>
     </Router>
   </ApolloProvider>,
   document.getElementById('app')

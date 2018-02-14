@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  Withdrawal.associate = function(models) {
+  Withdrawal.associate = function associate(models) {
     this.belongsTo(models.Investment);
   };
 

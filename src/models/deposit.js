@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  Deposit.associate = function(models) {
+  Deposit.associate = function associate(models) {
     this.belongsTo(models.Investment);
   };
 

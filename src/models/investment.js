@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     name: { type: DataTypes.STRING, allowNull: false }
   });
 
-  Investment.associate = function(models) {
+  Investment.associate = function associate(models) {
     this.belongsTo(models.Broker);
     this.hasMany(models.Deposit);
     this.hasMany(models.BalanceUpdate);

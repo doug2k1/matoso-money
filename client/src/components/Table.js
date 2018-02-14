@@ -6,7 +6,7 @@ type Props = {
   data: string[][]
 };
 
-export default class Table extends React.Component<Props, {}> {
+class Table extends React.Component<Props, {}> {
   render() {
     const { columns, data } = this.props;
 
@@ -15,12 +15,22 @@ export default class Table extends React.Component<Props, {}> {
         <thead>
           <tr>{columns.map(column => <th key={column}>{column}</th>)}</tr>
         </thead>
-        <tbody>
-          {data.map((row, i) => (
-            <tr key={i}>{row.map(cell => <td key={cell}>{cell}</td>)}</tr>
-          ))}
-        </tbody>
+        <tbody>{data.map(row => <TableRow cells={row} />)}</tbody>
       </table>
     );
   }
 }
+
+type TableRowProps = {
+  cells: any[]
+};
+
+class TableRow extends React.Component<TableRowProps, {}> {
+  render() {
+    const { cells } = this.props;
+
+    return <tr>{cells.map(cell => <td key={cell}>{cell}</td>)}</tr>;
+  }
+}
+
+export default Table;

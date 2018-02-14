@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
@@ -5,8 +6,9 @@ const cookieParser = require('cookie-parser');
 const cors = require('express-cors');
 const ForestAdmin = require('forest-express-sequelize');
 const jwt = require('express-jwt');
-const postgraphql = require('postgraphql').postgraphql;
+const { postgraphql } = require('postgraphql');
 const pg = require('pg');
+const { sequelize } = require('./models/index');
 
 // must use SSL to connect to Heroku
 pg.defaults.ssl = true;
@@ -31,10 +33,10 @@ app.use(
 );
 app.use(
   ForestAdmin.init({
-    modelsDir: __dirname + '/models',
+    modelsDir: path.resolve('/models'),
     envSecret: process.env.FOREST_ENV_SECRET,
     authSecret: process.env.FOREST_AUTH_SECRET,
-    sequelize: require('./models/index').sequelize
+    sequelize
   })
 );
 app.use(
