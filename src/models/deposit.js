@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const BalanceUpdate = sequelize.define('BalanceUpdate', {
-    amount: { type: DataTypes.DECIMAL(10, 5), allowNull: false },
+  const Deposit = sequelize.define('Deposit', {
+    amount: { type: DataTypes.DECIMAL(16, 2), allowNull: false },
     date: {
       type: DataTypes.DATEONLY,
       allowNull: false,
@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  BalanceUpdate.associate = function(models) {
+  Deposit.associate = function(models) {
     this.belongsTo(models.Investment);
   };
 
-  return BalanceUpdate;
+  return Deposit;
 };

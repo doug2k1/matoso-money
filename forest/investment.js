@@ -6,7 +6,7 @@ ForestAdmin.collection('Investment', {
       field: 'fullName',
       type: 'String',
       get(object) {
-        return `${object.name} (${object.broker.name})`;
+        return `${object.name} (${object.Broker.name})`;
       }
     }
   ]

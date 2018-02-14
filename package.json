@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server",
+    "start": "node src/index",
     "dev:back": "heroku local",
     "dev:front": "npm run start --prefix client",
     "dev": "concurrently \"npm run dev:back\" \"npm run dev:front\"",
@@ -28,7 +28,7 @@
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
     "postgraphql": "^3.5.6",
-    "sequelize": "^4.33.3"
+    "sequelize": "^4.33.4"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",

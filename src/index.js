@@ -34,7 +34,7 @@ app.use(
     modelsDir: __dirname + '/models',
     envSecret: process.env.FOREST_ENV_SECRET,
     authSecret: process.env.FOREST_AUTH_SECRET,
-    sequelize: require('./models').sequelize
+    sequelize: require('./models/index').sequelize
   })
 );
 app.use(

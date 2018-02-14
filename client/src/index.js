@@ -30,7 +30,9 @@ class Broker extends React.Component {
 
     return (
       <div>
-        {brokerQuery.allBrokers.edges.map(broker => <p key={broker.node.id}>{broker.node.name}</p>)}
+        {brokerQuery.allBrokers.edges.map(broker => (
+          <p key={broker.node.id}>{broker.node.name}</p>
+        ))}
       </div>
     );
   }
