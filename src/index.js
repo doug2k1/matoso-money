@@ -78,12 +78,17 @@ passport.deserializeUser((id, done) => {
   done(null, { id });
 });
 
+const siteURL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://matoso-money.herokuapp.com'
+    : 'http://localhost:5000';
+
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
       clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
-      callbackURL: '/auth/google/callback'
+      callbackURL: `${siteURL}/auth/google/callback`
     },
     async (accessToken, refreshToken, profile, done) => {
       if (profile.id === process.env.GOOGLE_OAUTH_ALLOWED_USER_ID) {
