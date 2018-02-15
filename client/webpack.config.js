@@ -1,6 +1,5 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const outputPath = '../public';
@@ -55,7 +54,6 @@ module.exports = {
 
   plugins: [
     new ExtractTextPlugin('css/styles.css'),
-    new HtmlPlugin({ template: 'index.html', filename: 'app.html' }),
     new CleanWebpackPlugin([outputPath], { allowExternal: true })
   ]
 };
