@@ -1,6 +1,7 @@
 module.exports = {
+  root: true,
   parser: 'babel-eslint',
-  plugins: ['flowtype'],
+  plugins: ['graphql', 'flowtype'],
   extends: ['airbnb', 'prettier'],
   env: { browser: true },
   rules: {

@@ -55,7 +55,7 @@ module.exports = {
 
   plugins: [
     new ExtractTextPlugin('css/styles.css'),
-    new HtmlPlugin({ template: 'index.html' }),
+    new HtmlPlugin({ template: 'index.html', filename: 'app.html' }),
     new CleanWebpackPlugin([outputPath], { allowExternal: true })
   ]
 };

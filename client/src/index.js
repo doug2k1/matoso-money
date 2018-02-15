@@ -37,14 +37,16 @@ class Broker extends React.Component<any, any> {
 
 const BrokerQL = graphql(
   gql(
-    `query brokerQuery { allBrokers {
-    edges {
-      node {
-        id,
-        name
+    `query brokerQuery { 
+      allBrokers {
+        edges {
+          node {
+            id,
+            name
+          }
+        }
       }
-    }
-  }}`
+    }`
   ),
   { name: 'brokerQuery' }
 )(Broker);
