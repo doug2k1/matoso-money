@@ -55,6 +55,7 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Router>
       <React.Fragment>
+        <a href="/auth/logout">Logout</a>
         <BrokerQL />
         <App />
       </React.Fragment>
