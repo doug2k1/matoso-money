@@ -6,11 +6,10 @@ const cookieSession = require('cookie-session');
 const cors = require('express-cors');
 const ForestAdmin = require('forest-express-sequelize');
 const jwt = require('express-jwt');
-const { postgraphql } = require('postgraphql');
 const pg = require('pg');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { sequelize } = require('./models/index');
+const { sequelize } = require('./models');
+const setupAuth = require('./setupAuth');
+const setupGraphQL = require('./setupGraphQL');
 
 // must use SSL to connect to Heroku
 pg.defaults.ssl = true;
@@ -62,65 +61,11 @@ app.use(
   })
 );
 
-// postgraphql
-app.use(
-  postgraphql(`${process.env.DATABASE_URL}?ssl=1`, 'public', {
-    graphiql: true
-  })
-);
+// auth
+setupAuth(app);
 
-// passport
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-  done(null, { id });
-});
-
-const siteURL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://matoso-money.herokuapp.com'
-    : 'http://localhost:5000';
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
-      callbackURL: `${siteURL}/auth/google/callback`
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      if (profile.id === process.env.GOOGLE_OAUTH_ALLOWED_USER_ID) {
-        return done(null, { id: profile.id });
-      }
-
-      return done();
-    }
-  )
-);
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.get(
-  '/auth/google',
-  passport.authenticate('google', {
-    scope: ['profile']
-  })
-);
-
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google'),
-  (req, res) => {
-    res.redirect('/');
-  }
-);
-
-app.get('/auth/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
-});
+// graphql
+setupGraphQL(app);
 
 app.get('/', (req, res) => {
   if (req.isAuthenticated()) {

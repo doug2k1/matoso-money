@@ -27,8 +27,8 @@ class Broker extends React.Component<any, any> {
 
     return (
       <div>
-        {brokerQuery.allBrokers.edges.map(broker => (
-          <p key={broker.node.id}>{broker.node.name}</p>
+        {brokerQuery.brokers.map(broker => (
+          <p key={broker.id}>{broker.name}</p>
         ))}
       </div>
     );
@@ -38,14 +38,10 @@ class Broker extends React.Component<any, any> {
 const BrokerQL = graphql(
   gql(
     `query brokerQuery { 
-      allBrokers {
-        edges {
-          node {
-            id,
-            name
-          }
-        }
-      }
+      brokers {
+        id
+        name
+      }  
     }`
   ),
   { name: 'brokerQuery' }
