@@ -40,10 +40,11 @@ const setup = app => {
   // graphql endpoint
   app.use(
     '/graphql',
-    authMiddleware(),
     bodyParser.json(),
     graphqlExpress({ schema })
   );
+
+  app.use('/graphql', authMiddleware());
 
   // graphiql endpoint
   app.use(
@@ -51,6 +52,8 @@ const setup = app => {
     authMiddleware(),
     graphiqlExpress({ endpointURL: '/graphql' })
   );
+
+  app.use('/graphiql', authMiddleware());
 };
 
 module.exports = setup;
