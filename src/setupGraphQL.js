@@ -10,11 +10,13 @@ const setup = app => {
     type Query { 
       brokers: [Broker]
       broker(id: ID!): Broker
-      investments: [Investment] 
+      investments: [Investment]
+      investment(id: ID!): Investment
     }
     type Broker { 
       id: ID!
       name: String! 
+      investments: [Investment]
     }
     type Investment {
       id: ID! 
@@ -28,7 +30,14 @@ const setup = app => {
     Query: {
       brokers: () => Broker.all(),
       broker: (root, { id }) => Broker.findById(id),
-      investments: () => Investment.all()
+      investments: () => Investment.all(),
+      investment: (root, { id }) => Investment.findById(id)
+    },
+    Investment: {
+      broker: obj => Broker.findOne({ where: { id: obj.BrokerId } })
+    },
+    Broker: {
+      investments: obj => Investment.findAll({ where: { BrokerId: obj.id } })
     }
   };
 
@@ -38,12 +47,7 @@ const setup = app => {
   });
 
   // graphql endpoint
-  app.use(
-    '/graphql',
-    bodyParser.json(),
-    graphqlExpress({ schema })
-  );
-
+  app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
   app.use('/graphql', authMiddleware());
 
   // graphiql endpoint
@@ -52,7 +56,6 @@ const setup = app => {
     authMiddleware(),
     graphiqlExpress({ endpointURL: '/graphql' })
   );
-
   app.use('/graphiql', authMiddleware());
 };
 
