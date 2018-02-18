@@ -32,9 +32,6 @@ app.use(
   })
 );
 
-// static files
-app.use(express.static('public'));
-
 // cors
 app.use(
   cors({
@@ -66,6 +63,9 @@ setupAuth(app);
 
 // graphql
 setupGraphQL(app);
+
+// static files
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
   if (req.isAuthenticated()) {
