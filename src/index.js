@@ -2,7 +2,8 @@ const path = require('path');
 const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session');
+const session = require('express-session');
+const SessionStore = require('connect-session-sequelize')(session.Store);
 const cors = require('express-cors');
 const ForestAdmin = require('forest-express-sequelize');
 const jwt = require('express-jwt');
@@ -25,10 +26,19 @@ app.use(bodyParser.json());
 // url encoding
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// cookies
+// session
+const sessionStore = new SessionStore({
+  db: sequelize
+});
+
 app.use(
-  cookieSession({
-    keys: [process.env.FOREST_AUTH_SECRET]
+  session({
+    secret: [process.env.FOREST_AUTH_SECRET],
+    store: sessionStore,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production'
+    },
+    resave: false
   })
 );
 
@@ -68,6 +78,7 @@ setupGraphQL(app);
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
+  console.log(req.user);
   if (req.isAuthenticated()) {
     res.sendFile(path.resolve('src/views/app.html'));
   } else {
