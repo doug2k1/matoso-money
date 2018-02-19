@@ -1,28 +1,42 @@
 // @flow
 import * as React from 'react';
+import { gql } from 'apollo-client-preset';
+import { Query } from 'react-apollo';
 
-type Props = {
-  name: string,
-  photo: string | null
-};
+const GET_USER = gql`
+  {
+    user {
+      displayName
+      photo
+    }
+  }
+`;
 
-export default class UserBox extends React.Component<Props, {}> {
+export default class UserBox extends React.Component<{}, {}> {
   render() {
-    const { name, photo } = this.props;
-
     return (
       <div className="user-panel">
-        <div className="image">
-          {photo ? (
-            <img src={photo} className="img" alt="user" />
-          ) : (
-            <span className="img">{name[0]}</span>
-          )}
-        </div>
-        <div className="info">
-          <p>{name}</p>
-          <a href="/auth/logout">Sair</a>
-        </div>
+        <Query query={GET_USER}>
+          {({ data }) => {
+            if (!data || !data.user) return null;
+
+            return (
+              <React.Fragment>
+                <div className="image">
+                  {data.user.photo ? (
+                    <img src={data.user.photo} className="img" alt="user" />
+                  ) : (
+                    <span className="img">{data.user.displayName[0]}</span>
+                  )}
+                </div>
+                <div className="info">
+                  <p>{data.user.displayName}</p>
+                  <a href="/auth/logout">Sair</a>
+                </div>
+              </React.Fragment>
+            );
+          }}
+        </Query>
       </div>
     );
   }

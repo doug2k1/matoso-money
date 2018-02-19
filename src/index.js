@@ -3,7 +3,7 @@ const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const SessionStore = require('connect-session-sequelize')(session.Store);
+const RedisStore = require('connect-redis')(session);
 const cors = require('express-cors');
 const ForestAdmin = require('forest-express-sequelize');
 const jwt = require('express-jwt');
@@ -27,18 +27,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // session
-const sessionStore = new SessionStore({
-  db: sequelize
-});
-
 app.use(
   session({
-    secret: [process.env.FOREST_AUTH_SECRET],
-    store: sessionStore,
+    secret: 'keyboard cat',
+    store: new RedisStore({
+      url: process.env.REDIS_URL
+    }),
     cookie: {
       secure: process.env.NODE_ENV === 'production'
     },
-    resave: false
+    resave: false,
+    saveUninitialized: true
   })
 );
 
@@ -74,15 +73,18 @@ setupAuth(app);
 // graphql
 setupGraphQL(app);
 
+// template
+app.set('view engine', 'ejs');
+app.set('views', './src/views');
+
 // static files
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  console.log(req.user);
   if (req.isAuthenticated()) {
-    res.sendFile(path.resolve('src/views/app.html'));
+    res.render('app');
   } else {
-    res.sendFile(path.resolve('src/views/index.html'));
+    res.render('index');
   }
 });
 

@@ -4,11 +4,11 @@ const config = require('./config');
 
 const setup = app => {
   passport.serializeUser((user, done) => {
-    done(null, JSON.stringify(user));
+    done(null, user);
   });
 
   passport.deserializeUser((user, done) => {
-    done(null, JSON.parse(user));
+    done(null, user);
   });
 
   // setup Google strategy
@@ -19,7 +19,7 @@ const setup = app => {
         clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
         callbackURL: `${config.siteURL}/auth/google/callback`
       },
-      async (accessToken, refreshToken, profile, done) => {
+      (accessToken, refreshToken, profile, done) => {
         if (profile.id === process.env.GOOGLE_OAUTH_ALLOWED_USER_ID) {
           return done(null, {
             id: profile.id,
@@ -28,7 +28,7 @@ const setup = app => {
           });
         }
 
-        return done();
+        return done(null, false);
       }
     )
   );

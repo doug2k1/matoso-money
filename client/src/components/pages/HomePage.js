@@ -2,7 +2,6 @@
 import React, { Fragment } from 'react';
 import { gql } from 'apollo-client-preset';
 import InfoBox from '../Infobox';
-import Box from '../Box';
 import { Query } from 'react-apollo';
 
 const GET_BALANCES = gql`

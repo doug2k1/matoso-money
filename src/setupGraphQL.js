@@ -12,16 +12,16 @@ const setup = app => {
   });
 
   // graphql endpoint
-  app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
-  app.use('/graphql', authMiddleware());
+  app.use(
+    '/graphql',
+    bodyParser.json(),
+    graphqlExpress(req => ({ schema, context: { user: req.user } }))
+  );
+  app.use('/graphql', authMiddleware);
 
   // graphiql endpoint
-  app.use(
-    '/graphiql',
-    authMiddleware(),
-    graphiqlExpress({ endpointURL: '/graphql' })
-  );
-  app.use('/graphiql', authMiddleware());
+  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+  app.use('/graphiql', authMiddleware);
 };
 
 module.exports = setup;

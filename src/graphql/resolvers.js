@@ -11,11 +11,12 @@ const { Broker, Investment, BalanceUpdate } = require('../models');
 
 module.exports = {
   Query: {
-    brokers: (_, args) => Broker.all(args),
-    broker: (_, { id }) => Broker.findById(id),
-    investments: (_, args) => Investment.all(args),
-    investment: (_, { id }) => Investment.findById(id),
-    balanceUpdates: (_, args) => BalanceUpdate.all(args)
+    user: (obj, args, context) => context.user,
+    brokers: (obj, args) => Broker.all(args),
+    broker: (obj, { id }) => Broker.findById(id),
+    investments: (obj, args) => Investment.all(args),
+    investment: (obj, { id }) => Investment.findById(id),
+    balanceUpdates: (obj, args) => BalanceUpdate.all(args)
   },
   Investment: {
     broker: obj => Broker.findOne({ where: { id: obj.BrokerId } }),

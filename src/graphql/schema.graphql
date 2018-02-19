@@ -1,11 +1,18 @@
 scalar Date
 
 type Query {
+  user: User
   brokers(limit: Int): [Broker]
   broker(id: ID!): Broker
   investments(limit: Int): [Investment]
   investment(id: ID!): Investment
   balanceUpdates(limit: Int): [BalanceUpdate]
+}
+
+type User {
+  id: ID!
+  displayName: String!
+  photo: String
 }
 
 type Broker {
