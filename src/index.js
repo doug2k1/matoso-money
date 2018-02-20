@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // session
 app.use(
   session({
-    secret: 'keyboard cat',
+    secret: process.env.SESSION_KEY,
     store: new RedisStore({
       url: process.env.REDIS_URL
     }),
@@ -37,7 +37,8 @@ app.use(
       secure: process.env.NODE_ENV === 'production'
     },
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false,
+    proxy: true
   })
 );
 
