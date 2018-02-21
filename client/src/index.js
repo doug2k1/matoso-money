@@ -5,7 +5,10 @@ import { ApolloProvider } from 'react-apollo';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-client-preset';
 import App from './components/App';
 
-const httpLink = new HttpLink({ uri: '/graphql' });
+const httpLink = new HttpLink({
+  uri: '/graphql',
+  credentials: 'same-origin'
+});
 
 const client = new ApolloClient({
   link: httpLink,

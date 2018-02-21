@@ -34,7 +34,8 @@ app.use(
       url: process.env.REDIS_URL
     }),
     cookie: {
-      secure: process.env.NODE_ENV === 'production'
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 2.592e9 // 30 days
     },
     resave: false,
     saveUninitialized: false,

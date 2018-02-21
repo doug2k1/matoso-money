@@ -14,14 +14,15 @@ const setup = app => {
   // graphql endpoint
   app.use(
     '/graphql',
+    authMiddleware(),
     bodyParser.json(),
-    graphqlExpress(req => ({ schema, context: { user: req.user } }))
+    graphqlExpress(req => {
+      return { schema, context: { user: req.user } };
+    })
   );
-  app.use('/graphql', authMiddleware);
 
   // graphiql endpoint
   app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
-  app.use('/graphiql', authMiddleware);
 };
 
 module.exports = setup;
