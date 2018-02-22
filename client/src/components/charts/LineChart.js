@@ -7,7 +7,9 @@ type Props = {
     labels: string[],
     datasets: {
       label: string,
-      data: number[]
+      data: number[],
+      backgroundColor?: string,
+      borderColor?: string
     }[]
   }
 };

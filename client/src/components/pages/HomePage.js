@@ -70,7 +70,9 @@ export default class HomePage extends React.Component<{}, {}> {
                   datasets: [
                     {
                       label: 'Patrimônio',
-                      data: Object.values(grouped)
+                      data: Object.values(grouped),
+                      borderColor: '#00a65a',
+                      backgroundColor: '#00a65a'
                     }
                   ]
                 };
