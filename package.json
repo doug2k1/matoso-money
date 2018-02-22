@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "node src/index",
     "dev:back": "heroku local",
     "dev:front": "npm run start --prefix client",
-    "start": "concurrently \"npm run dev:back\" \"npm run dev:front\"",
+    "dev": "concurrently \"npm run dev:back\" \"npm run dev:front\"",
     "prettier": "prettier --write \"./{src,client/src}/**/*.{js,scss}\"",
     "lint": "eslint --fix \"./{src,client/src}/**/*.js\"",
     "deploy": "git push heroku master",

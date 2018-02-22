@@ -18,6 +18,15 @@ const GET_BALANCES = gql`
   }
 `;
 
+const GET_EVOLUTION = gql`
+  {
+    balanceUpdates {
+      amount
+      date
+    }
+  }
+`;
+
 export default class HomePage extends React.Component<{}, {}> {
   render() {
     return (
@@ -48,7 +57,29 @@ export default class HomePage extends React.Component<{}, {}> {
         </div>
 
         <Box>
-          <LineChart />
+          <Query query={GET_EVOLUTION}>
+            {({ data }) => {
+              if (data) {
+                const grouped = {};
+                data.balanceUpdates.forEach(bal => {
+                  grouped[bal.date] = grouped[bal.date] || 0;
+                  grouped[bal.date] += bal.amount;
+                });
+                const chartData = {
+                  labels: Object.keys(grouped),
+                  datasets: [
+                    {
+                      label: 'Patrimônio',
+                      data: Object.values(grouped)
+                    }
+                  ]
+                };
+                return <LineChart data={chartData} />;
+              }
+
+              return null;
+            }}
+          </Query>
         </Box>
       </div>
     );

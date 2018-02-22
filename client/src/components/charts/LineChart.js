@@ -1,12 +1,21 @@
 // @flow
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import Chart from 'chart.js';
 
-export default class LineChart extends React.Component<{}, {}> {
-  canvasEl: ?HTMLCanvasElement = null;
+type Props = {
+  data: {
+    labels: string[],
+    datasets: {
+      label: string,
+      data: number[]
+    }[]
+  }
+};
 
+export default class LineChart extends React.Component<{}, Props> {
   componentDidMount() {
+    const { data } = this.props;
+
     const chart = new Chart(this.canvasEl, {
       type: 'line',
       options: {
@@ -35,25 +44,11 @@ export default class LineChart extends React.Component<{}, {}> {
           }
         }
       },
-      data: {
-        labels: ['January', 'February', 'March', 'April'],
-        datasets: [
-          {
-            label: 'Warren',
-            borderColor: '#ff0000',
-            backgroundColor: '#ff0000',
-            data: [1.1, 1.8, 2.3, 3.6]
-          },
-          {
-            label: 'Tesouro Selic',
-            borderColor: '#0000ff',
-            backgroundColor: '#0000ff',
-            data: [0.3, 0.7, 1.1, 2.5]
-          }
-        ]
-      }
+      data
     });
   }
+
+  canvasEl: ?HTMLCanvasElement = null;
 
   render() {
     return (
