@@ -1,8 +1,10 @@
 // @flow
-import React, { Fragment } from 'react';
+import React from 'react';
 import { gql } from 'apollo-client-preset';
-import InfoBox from '../Infobox';
 import { Query } from 'react-apollo';
+import InfoBox from '../Infobox';
+import Box from '../Box';
+import LineChart from '../charts/LineChart';
 
 const GET_BALANCES = gql`
   {
@@ -19,7 +21,7 @@ const GET_BALANCES = gql`
 export default class HomePage extends React.Component<{}, {}> {
   render() {
     return (
-      <Fragment>
+      <div>
         <div className="grid-3">
           <Query query={GET_BALANCES}>
             {({ data }) => {
@@ -44,7 +46,11 @@ export default class HomePage extends React.Component<{}, {}> {
 
           <InfoBox icon="line-chart" text="Projeção" value="2035" bg="aqua" />
         </div>
-      </Fragment>
+
+        <Box>
+          <LineChart />
+        </Box>
+      </div>
     );
   }
 }

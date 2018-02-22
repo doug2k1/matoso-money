@@ -32,6 +32,15 @@ body {
       'sideheader sideheader'
       'sidebar contentheader'
       'content content';
+    transition: grid-template-columns 0.5s;
+
+    &.menu-open {
+      grid-template-columns: $sidebar-width 1fr;
+      grid-template-areas:
+        'sideheader sideheader'
+        'sidebar contentheader'
+        'sidebar content';
+    }
   }
 }
 
@@ -418,8 +427,10 @@ body {
   }
 
   &:hover,
-  &:active {
+  &:active,
+  &:focus {
     background: darken($color-primary-dark, 5%);
+    outline: none;
   }
 
   @media (max-width: $width-mobile) {
