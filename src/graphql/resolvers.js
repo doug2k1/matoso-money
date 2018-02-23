@@ -21,7 +21,7 @@ module.exports = {
   Investment: {
     broker: obj => Broker.findOne({ where: { id: obj.BrokerId } }),
     balanceUpdates: (obj, args) =>
-      BalanceUpdate.all({ where: { InvestmentId: obj.id } })
+      BalanceUpdate.all({ where: { InvestmentId: obj.id }, ...args })
   },
   Broker: {
     investments: obj => Investment.findAll({ where: { BrokerId: obj.id } })

@@ -2,9 +2,9 @@
 import React from 'react';
 import { gql } from 'apollo-client-preset';
 import { Query } from 'react-apollo';
+import { Chart } from 'react-google-charts';
 import InfoBox from '../Infobox';
 import Box from '../Box';
-import LineChart from '../charts/LineChart';
 
 const GET_BALANCES = gql`
   {
@@ -65,18 +65,28 @@ export default class HomePage extends React.Component<{}, {}> {
                   grouped[bal.date] = grouped[bal.date] || 0;
                   grouped[bal.date] += bal.amount;
                 });
-                const chartData = {
-                  labels: Object.keys(grouped),
-                  datasets: [
-                    {
-                      label: 'Patrimônio',
-                      data: Object.values(grouped),
-                      borderColor: '#00a65a',
-                      backgroundColor: '#00a65a'
-                    }
-                  ]
-                };
-                return <LineChart data={chartData} />;
+                const chartData = Object.keys(grouped).map(key => [
+                  new Date(key),
+                  grouped[key]
+                ]);
+
+                return (
+                  <Chart
+                    chartType="LineChart"
+                    columns={[
+                      { type: 'date', formatType: 'short' },
+                      { type: 'number' }
+                    ]}
+                    rows={chartData}
+                    options={{
+                      legend: 'none',
+                      hAxis: {
+                        format: 'dd/MM/yyyy'
+                      }
+                    }}
+                    width="100%"
+                  />
+                );
               }
 
               return null;
