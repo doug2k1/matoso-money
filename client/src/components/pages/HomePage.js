@@ -2,8 +2,7 @@
 import React from 'react';
 import { gql } from 'apollo-client-preset';
 import { Query } from 'react-apollo';
-import { Chart } from 'react-google-charts';
-import deepMerge from 'lodash/merge';
+import { Line } from 'react-chartjs-2';
 import InfoBox from '../Infobox';
 import Box from '../Box';
 
@@ -93,38 +92,72 @@ export default class HomePage extends React.Component<{}, {}> {
                   };
                 });
 
-                // merge everything
-                const mergedValues = deepMerge(
-                  {},
-                  balanceByDate,
-                  projectionByDate
-                );
+                const chartData = {
+                  datasets: [
+                    {
+                      label: 'Patrimônio',
+                      data: Object.keys(balanceByDate).map(key => ({
+                        t: new Date(key),
+                        y: balanceByDate[key].amount
+                      })),
+                      borderColor: '#00a65a',
+                      backgroundColor: '#00a65a'
+                    },
+                    {
+                      label: 'Projeção',
+                      data: Object.keys(projectionByDate).map(key => ({
+                        t: new Date(key),
+                        y: projectionByDate[key].projection
+                      })),
+                      borderColor: '#00c0ef',
+                      backgroundColor: '#00c0ef'
+                    }
+                  ]
+                };
 
-                // build chart data
-                const chartData = Object.keys(mergedValues).map(key => [
-                  new Date(key),
-                  mergedValues[key].amount,
-                  mergedValues[key].projection
-                ]);
-
-                return (
-                  <Chart
-                    chartType="LineChart"
-                    columns={[
-                      { type: 'date', formatType: 'short' },
-                      { type: 'number' },
-                      { type: 'number' }
-                    ]}
-                    rows={chartData}
-                    options={{
-                      legend: 'none',
-                      hAxis: {
-                        format: 'dd/MM/yyyy'
+                const chartOptions = {
+                  legend: {
+                    position: 'bottom',
+                    labels: {
+                      boxWidth: 12
+                    }
+                  },
+                  tooltips: {
+                    mode: 'x',
+                    intersect: false
+                  },
+                  elements: {
+                    point: {
+                      radius: 0,
+                      hitRadius: 5
+                    },
+                    line: {
+                      tension: 0,
+                      borderWidth: 2,
+                      fill: false
+                    }
+                  },
+                  scales: {
+                    xAxes: [
+                      {
+                        type: 'time',
+                        time: {
+                          format: 'DD/MM/YYYY',
+                          tooltipFormat: 'DD/MM/YYYY'
+                        }
                       }
-                    }}
-                    width="100%"
-                  />
-                );
+                    ],
+                    yAxes: [
+                      {
+                        ticks: {
+                          callback: value => value.toLocaleString()
+                        }
+                      }
+                    ]
+                  }
+                };
+
+                return <Line data={chartData} options={chartOptions} />;
               }
 
               return null;
