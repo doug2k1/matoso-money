@@ -3,6 +3,7 @@ import React from 'react';
 import { gql } from 'apollo-client-preset';
 import { Query } from 'react-apollo';
 import { Chart } from 'react-google-charts';
+import deepMerge from 'lodash/merge';
 import InfoBox from '../Infobox';
 import Box from '../Box';
 
@@ -21,6 +22,14 @@ const GET_BALANCES = gql`
 const GET_EVOLUTION = gql`
   {
     balanceUpdates {
+      amount
+      date
+    }
+    projections {
+      amount
+      date
+    }
+    historyBalances {
       amount
       date
     }
@@ -60,14 +69,42 @@ export default class HomePage extends React.Component<{}, {}> {
           <Query query={GET_EVOLUTION}>
             {({ data }) => {
               if (data) {
-                const grouped = {};
-                data.balanceUpdates.forEach(bal => {
-                  grouped[bal.date] = grouped[bal.date] || 0;
-                  grouped[bal.date] += bal.amount;
+                const balanceByDate = {};
+
+                // add historical data
+                data.historyBalances.forEach(bal => {
+                  balanceByDate[bal.date] = { amount: bal.amount };
                 });
-                const chartData = Object.keys(grouped).map(key => [
+
+                // add recent data
+                data.balanceUpdates.forEach(bal => {
+                  balanceByDate[bal.date] = balanceByDate[bal.date] || {
+                    amount: 0
+                  };
+                  balanceByDate[bal.date].amount += bal.amount;
+                });
+
+                const projectionByDate = {};
+
+                // add projections
+                data.projections.forEach(projection => {
+                  projectionByDate[projection.date] = {
+                    projection: projection.amount
+                  };
+                });
+
+                // merge everything
+                const mergedValues = deepMerge(
+                  {},
+                  balanceByDate,
+                  projectionByDate
+                );
+
+                // build chart data
+                const chartData = Object.keys(mergedValues).map(key => [
                   new Date(key),
-                  grouped[key]
+                  mergedValues[key].amount,
+                  mergedValues[key].projection
                 ]);
 
                 return (
@@ -75,6 +112,7 @@ export default class HomePage extends React.Component<{}, {}> {
                     chartType="LineChart"
                     columns={[
                       { type: 'date', formatType: 'short' },
+                      { type: 'number' },
                       { type: 'number' }
                     ]}
                     rows={chartData}

@@ -7,6 +7,8 @@ type Query {
   investments(limit: Int): [Investment]
   investment(id: ID!): Investment
   balanceUpdates(limit: Int): [BalanceUpdate]
+  projections: [Projection]
+  historyBalances: [HistoryBalance]
 }
 
 type User {
@@ -30,6 +32,16 @@ type Investment {
 
 type BalanceUpdate {
   id: ID!
+  amount: Float!
+  date: Date!
+}
+
+type Projection {
+  amount: Float!
+  date: Date!
+}
+
+type HistoryBalance {
   amount: Float!
   date: Date!
 }
