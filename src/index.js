@@ -9,6 +9,7 @@ const ForestAdmin = require('forest-express-sequelize');
 const jwt = require('express-jwt');
 const pg = require('pg');
 const { sequelize } = require('./models');
+const setupActions = require('./setupActions');
 const setupAuth = require('./setupAuth');
 const setupGraphQL = require('./setupGraphQL');
 
@@ -68,6 +69,9 @@ app.use(
     sequelize
   })
 );
+
+// forest actions
+setupActions(app);
 
 // auth
 setupAuth(app);

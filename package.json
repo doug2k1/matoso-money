@@ -23,6 +23,7 @@
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",
     "connect-redis": "^3.3.3",
+    "csv-parse": "^2.0.4",
     "dataloader": "^1.4.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
@@ -31,13 +32,14 @@
     "express-session": "^1.15.6",
     "forest-express-sequelize": "^2.4.3",
     "graphql": "^0.13.1",
-    "graphql-import": "^0.4.4",
+    "graphql-import": "^0.4.5",
     "graphql-tools": "^2.21.0",
+    "parse-data-uri": "^0.2.0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.33.4"
+    "sequelize": "^4.34.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
@@ -51,7 +53,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-react": "^7.7.0",
-    "prettier": "^1.10.2",
+    "prettier": "^1.11.0",
     "sequelize-cli": "^4.0.0"
   }
 }
