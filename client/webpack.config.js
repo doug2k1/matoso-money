@@ -12,7 +12,6 @@ module.exports = {
     filename: 'main.js'
   },
 
-  devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
     proxy: {
