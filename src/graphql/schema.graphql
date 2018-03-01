@@ -28,9 +28,23 @@ type Investment {
   name: String!
   broker: Broker
   balanceUpdates(limit: Int, order: [[String]]): [BalanceUpdate]
+  deposits: [Deposit]
+  withdrawals: [Withdrawal]
 }
 
 type BalanceUpdate {
+  id: ID!
+  amount: Float!
+  date: Date!
+}
+
+type Deposit {
+  id: ID!
+  amount: Float!
+  date: Date!
+}
+
+type Withdrawal {
   id: ID!
   amount: Float!
   date: Date!

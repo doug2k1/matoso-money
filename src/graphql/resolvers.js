@@ -1,13 +1,25 @@
 const { GraphQLString } = require('graphql');
-// const DataLoader = require('dataloader');
-const { Broker, Investment, BalanceUpdate } = require('../models');
+const DataLoader = require('dataloader');
+const {
+  Broker,
+  Investment,
+  BalanceUpdate,
+  Deposit,
+  Withdrawal
+} = require('../models');
 
-/*
- TODO: reduce queries
-  const balanceByInvestmentIdLoader = new DataLoader(ids =>
-    BalanceUpdate.all({ where: { InvestmentId: ids } })
-  );
- */
+// data loaders
+const balancesByInvestmentIdLoader = new DataLoader(ids =>
+  BalanceUpdate.all({ where: { InvestmentId: ids } })
+);
+
+const depositsByInvestmentIdLoader = new DataLoader(ids =>
+  Deposit.all({ where: { InvestmentId: ids } })
+);
+
+const withdrawalsByInvestmentIdLoader = new DataLoader(ids =>
+  Withdrawal.all({ where: { InvestmentId: ids } })
+);
 
 module.exports = {
   Query: {
@@ -23,7 +35,11 @@ module.exports = {
   Investment: {
     broker: obj => Broker.findOne({ where: { id: obj.BrokerId } }),
     balanceUpdates: (obj, args) =>
-      BalanceUpdate.all({ where: { InvestmentId: obj.id }, ...args })
+      args
+        ? BalanceUpdate.all({ where: { InvestmentId: obj.id }, ...args })
+        : balancesByInvestmentIdLoader.load(obj.id),
+    deposits: obj => depositsByInvestmentIdLoader.load(obj.id),
+    withdrawals: obj => withdrawalsByInvestmentIdLoader.load(obj.id)
   },
   Broker: {
     investments: obj => Investment.findAll({ where: { BrokerId: obj.id } })
