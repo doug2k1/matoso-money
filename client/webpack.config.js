@@ -17,13 +17,6 @@ module.exports = {
     filename: 'main.js'
   },
 
-  serve: {
-    add: app => {
-      app.use(convert(proxy('/graphql', { target: 'http://localhost:5000' })));
-      app.use(convert(history()));
-    }
-  },
-
   module: {
     rules: [
       {
@@ -61,3 +54,12 @@ module.exports = {
     new CleanWebpackPlugin([outputPath], { allowExternal: true })
   ]
 };
+
+if (process.env.WEBPACK_SERVE) {
+  module.exports.serve = {
+    add: app => {
+      app.use(convert(proxy('/graphql', { target: 'http://localhost:5000' })));
+      app.use(convert(history()));
+    }
+  };
+}
