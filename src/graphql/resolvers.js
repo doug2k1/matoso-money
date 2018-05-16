@@ -35,11 +35,9 @@ module.exports = {
   Investment: {
     broker: obj => Broker.findOne({ where: { id: obj.BrokerId } }),
     balanceUpdates: (obj, args) =>
-      args
-        ? BalanceUpdate.all({ where: { InvestmentId: obj.id }, ...args })
-        : balancesByInvestmentIdLoader.load(obj.id),
-    deposits: obj => depositsByInvestmentIdLoader.load(obj.id),
-    withdrawals: obj => withdrawalsByInvestmentIdLoader.load(obj.id)
+      BalanceUpdate.all({ where: { InvestmentId: obj.id }, ...args }),
+    deposits: obj => Deposit.all({ where: { InvestmentId: obj.id } }),
+    withdrawals: obj => Withdrawal.all({ where: { InvestmentId: obj.id } })
   },
   Broker: {
     investments: obj => Investment.findAll({ where: { BrokerId: obj.id } })

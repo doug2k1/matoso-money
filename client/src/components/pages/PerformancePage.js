@@ -1,5 +1,5 @@
 // @flow
-import React, { Fragment } from 'react';
+import React from 'react';
 import Box from '../Box';
 import Table from '../Table';
 import Button from '../Button';
@@ -7,7 +7,7 @@ import Button from '../Button';
 export default class PerformancePage extends React.Component<{}, {}> {
   render() {
     return (
-      <Fragment>
+      <>
         <Box footer={<Button label="Adicionar" icon="plus" />} />
         <Box title="Entradas">
           <Table
@@ -18,7 +18,7 @@ export default class PerformancePage extends React.Component<{}, {}> {
             ]}
           />
         </Box>
-      </Fragment>
+      </>
     );
   }
 }

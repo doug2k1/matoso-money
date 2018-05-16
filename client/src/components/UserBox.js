@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { gql } from 'apollo-client-preset';
+import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
 const GET_USER = gql`

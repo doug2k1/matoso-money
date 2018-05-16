@@ -4,7 +4,7 @@ ForestAdmin.collection('BalanceUpdate', {
   actions: [
     {
       name: 'Bulk import',
-      global: true,
+      type: 'global',
       fields: [{ field: 'file', type: 'File' }]
     }
   ]

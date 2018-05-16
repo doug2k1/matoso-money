@@ -2,25 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-client-preset';
+import ApolloClient from 'apollo-boost';
 import App from './components/App';
 
-const httpLink = new HttpLink({
-  uri: '/graphql',
-  credentials: 'same-origin'
-});
-
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache()
-});
+const client = new ApolloClient();
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Router>
-      <React.Fragment>
-        <App />
-      </React.Fragment>
+      <App />
     </Router>
   </ApolloProvider>,
   document.getElementById('app')

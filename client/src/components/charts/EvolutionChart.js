@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { gql } from 'apollo-client-preset';
+import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { Line } from 'react-chartjs-2';
 import Box from '../Box';
@@ -52,19 +52,23 @@ export default class EvolutionChart extends React.Component<{}, {}> {
       datasets: [
         {
           label: 'Patrimônio',
-          data: Object.keys(balanceByDate).map(key => ({
-            t: new Date(key),
-            y: balanceByDate[key].amount
-          })),
+          data: Object.keys(balanceByDate)
+            .sort()
+            .map(key => ({
+              t: new Date(key),
+              y: balanceByDate[key].amount
+            })),
           borderColor: '#00a65a',
           backgroundColor: '#00a65a'
         },
         {
           label: 'Projeção',
-          data: Object.keys(projectionByDate).map(key => ({
-            t: new Date(key),
-            y: projectionByDate[key].projection
-          })),
+          data: Object.keys(projectionByDate)
+            .sort()
+            .map(key => ({
+              t: new Date(key),
+              y: projectionByDate[key].projection
+            })),
           borderColor: '#00c0ef',
           backgroundColor: '#00c0ef'
         }
@@ -76,56 +80,54 @@ export default class EvolutionChart extends React.Component<{}, {}> {
     return (
       <Box>
         <Query query={GET_EVOLUTION}>
-          {({ data }) => {
-            if (data) {
-              const chartData = EvolutionChart.buildChartData(data);
+          {({ loading, data }) => {
+            if (loading) return null;
 
-              const chartOptions = {
-                legend: {
-                  position: 'bottom',
-                  labels: {
-                    boxWidth: 12
-                  }
-                },
-                tooltips: {
-                  mode: 'x',
-                  intersect: false
-                },
-                elements: {
-                  point: {
-                    radius: 0,
-                    hitRadius: 5
-                  },
-                  line: {
-                    tension: 0,
-                    borderWidth: 2,
-                    fill: false
-                  }
-                },
-                scales: {
-                  xAxes: [
-                    {
-                      type: 'time',
-                      time: {
-                        format: 'DD/MM/YYYY',
-                        tooltipFormat: 'DD/MM/YYYY'
-                      }
-                    }
-                  ],
-                  yAxes: [
-                    {
-                      ticks: {
-                        callback: value => value.toLocaleString()
-                      }
-                    }
-                  ]
+            const chartData = EvolutionChart.buildChartData(data);
+
+            const chartOptions = {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  boxWidth: 12
                 }
-              };
+              },
+              tooltips: {
+                mode: 'x',
+                intersect: false
+              },
+              elements: {
+                point: {
+                  radius: 0,
+                  hitRadius: 5
+                },
+                line: {
+                  tension: 0,
+                  borderWidth: 2,
+                  fill: false
+                }
+              },
+              scales: {
+                xAxes: [
+                  {
+                    type: 'time',
+                    time: {
+                      format: 'DD/MM/YYYY',
+                      tooltipFormat: 'DD/MM/YYYY'
+                    }
+                  }
+                ],
+                yAxes: [
+                  {
+                    ticks: {
+                      callback: value => value.toLocaleString()
+                    }
+                  }
+                ]
+              }
+            };
 
-              return <Line data={chartData} options={chartOptions} />;
-            }
-
-            return null;
+            return <Line data={chartData} options={chartOptions} />;
           }}
         </Query>
       </Box>

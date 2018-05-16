@@ -1,10 +1,15 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const convert = require('koa-connect');
+const history = require('connect-history-api-fallback');
+const proxy = require('http-proxy-middleware');
 
 const outputPath = '../public';
 
 module.exports = {
+  mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
+
   entry: './src/index.js',
 
   output: {
@@ -12,10 +17,10 @@ module.exports = {
     filename: 'main.js'
   },
 
-  devServer: {
-    historyApiFallback: true,
-    proxy: {
-      '/graphql': 'http://localhost:5000'
+  serve: {
+    add: app => {
+      app.use(convert(proxy('/graphql', { target: 'http://localhost:5000' })));
+      app.use(convert(history()));
     }
   },
 
